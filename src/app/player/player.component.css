@@ -1,0 +1,23 @@
+.table {
+    width: 100%
+}
+
+.mat-column-Name {
+    flex: none;
+    width: 300px;
+}
+
+.mat-column-Role {
+    flex: none;
+    width: 200px;
+}
+
+.mat-column-Label {
+    flex: none;
+    width: 100px;
+}
+
+.mat-column-Price {
+    flex: none;
+    width: 200px;
+}

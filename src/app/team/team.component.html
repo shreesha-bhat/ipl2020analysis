@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-sm bg-light">
+
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="navbar-brand">IPL</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/player" class="nav-link">Player Statistics</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/team" class="nav-link">Team Statistics</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/bidding" class="nav-link">Bidding Statistics</a>
+        </li>
+        <li class="float-right" style="margin-left: 86rem;">
+            <button (click)="clickEvent()" class="btn-primary btn-sm">Logout</button>
+        </li>
+    </ul>
+
+</nav>
+<div class="row container-fluid mt-3">
+    <div class="col-md-6">
+        <div *ngIf="tableChart">
+            <google-chart [data]="tableChart"></google-chart>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div *ngIf="columnChart">
+            <google-chart [data]="columnChart"></google-chart>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-sm bg-light">
+
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="navbar-brand">IPL</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/player" class="nav-link">Player Statistics</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/team" class="nav-link">Team Statistics</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/bidding" class="nav-link">Bidding Statistics</a>
+        </li>
+        <li class="float-right" style="margin-left: 86rem;">
+            <button (click)="clickEvent()" class="btn-primary btn-sm">Logout</button>
+        </li>
+    </ul>
+
+</nav>
+<div class="row container-fluid mt-3">
+    <div class="col-lg-6">
+        <div *ngFor="let player of maxplayers">
+            <div class="text-primary">
+                <h2>
+                    Maximum Paid {{player._id}}
+                </h2>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Label</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let p of player.maxplayers;let i =index">
+                    <td>{{p.Name}}</td>
+                    <td>{{p.Role}}</td>
+                    <td>{{p.Label}}</td>
+                    <td><i class="fas fa-rupee-sign"></i>&nbsp;{{p.Amount}}</td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Label</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let player of sorted">
+                    <td>{{player.Name}}</td>
+                    <td>{{player.Role}}</td>
+                    <td>{{player.Label}}</td>
+                    <td><i class="fas fa-rupee-sign"></i>&nbsp;{{player.Amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
