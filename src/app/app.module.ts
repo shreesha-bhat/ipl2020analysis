@@ -15,6 +15,7 @@ import {MatTableModule} from '@angular/material/table';
 import { LoginComponent } from './login/login.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input'
+import { MatPaginatorModule } from '@angular/material/paginator'; 
 
 
 
@@ -37,7 +38,8 @@ import { MatInputModule } from '@angular/material/input'
     MatTableModule,
     FormsModule,    
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }

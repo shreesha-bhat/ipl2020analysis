@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  baseUrl ="http://127.0.0.1:5000/";
+  baseUrl ="http://ipl2020analysis.herokuapp.com/";
   constructor(private http:HttpClient,private router: Router) { }
 
   getAuthenticated(username, password): Observable<JwtRequest> {

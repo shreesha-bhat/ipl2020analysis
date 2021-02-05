@@ -103,14 +103,15 @@
                 <tr mat-header-row *matHeaderRowDef="playerscolumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: playerscolumns;"></tr>
             </table>
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
     <div class="col-lg-5">
         <div *ngIf="pieChart">
-            <google-chart [data]="pieChart" (chartSelect)="onChartSelect($event)"></google-chart>
+            <google-chart #hpiechart [data]="pieChart" (chartSelect)="onChartSelect($event)"></google-chart>
         </div>
-        <div *ngIf="tableChart " style="margin-left: 150px !important;">
-            <google-chart [data]="tableChart "></google-chart>
+        <div *ngIf="tableChart " style="margin-left: 130px !important;">
+            <google-chart #htablechart [data]="tableChart "></google-chart>
         </div>
     </div>
 </div>

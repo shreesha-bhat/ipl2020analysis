@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class IplserviceService {
 
-  baseUrl ="http://127.0.0.1:5000/ipl/";
+  baseUrl ="http://ipl2020analysis.herokuapp.com/ipl/";
   constructor(private http:HttpClient) { }
   
   teamLabels():Observable<any>{

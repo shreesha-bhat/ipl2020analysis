@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {IplserviceService} from '../iplservice.service'
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { ChartSelectEvent } from 'ng2-google-charts';
 import {AuthServiceService} from '../auth/auth-service.service'
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 
 
@@ -11,18 +14,24 @@ import {AuthServiceService} from '../auth/auth-service.service'
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })
+
 export class PlayerComponent implements OnInit {
   teamNames;
   teamName;
   players;
-  datasource =[]
+  datasource =  new MatTableDataSource();
   pieChart:GoogleChartInterface;
   tableChart:GoogleChartInterface;
   playerscolumns :string[] =['Name','Role','Label','Price']
+  
 
   constructor(private iplService:IplserviceService,private authservice:AuthServiceService) { }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('hpiechart ', {static: false}) hpiechart;
+  @ViewChild('htablechart ', {static: false}) htablechart;
 
   ngOnInit(): void {
+    
     this.iplService.teamLabels().subscribe(res=>{
       this.teamNames=res['Team Labels'];
     })
@@ -32,8 +41,8 @@ export class PlayerComponent implements OnInit {
     if(this.teamName && this.teamName.length > 0){
       this.iplService.getPlayersByTeamName(this.teamName).subscribe(res=>{
         this.players = res["Team players Detail"];
-        this.datasource = this.players
-        
+        this.datasource = new MatTableDataSource(this.players); 
+        this.datasource.paginator = this.paginator;
       })
       this.iplService.getTeamRoleStat(this.teamName).subscribe(res=>{
         let role_count = res["Team players Detail"];
@@ -54,33 +63,33 @@ export class PlayerComponent implements OnInit {
       dataTable:data,
       options:{'Role':'Count',
       width:700,
-      height:600}
+      height:400}
     }
+    this.hpiechart.draw();
   }
 
   onChartSelect(event:ChartSelectEvent){
-    let role = event.selectedRowFormattedValues[0];
-    console.log(role);
-    
+    let role = event.selectedRowFormattedValues[0];    
     this.iplService.getPlayerByTeamAndRole(this.teamName,role).subscribe(res=>{
       let players = res["Team players Detail"];
       let data =[];
       data.push(["Players","Team","Role","Price"]);
-      for(let p of players){
+      for(let p of players){  
         data.push([p["Name"],p["Label"],p["Role"],p["Amount"]]);
       }
-      this.showTableChart(data);
-        
+      this.showTableChart(data); 
     })
     }
     showTableChart(data){
       this.tableChart ={
         chartType:"Table",
         dataTable:data,
-        options:{allowHtml: true,
+        options:{
           width:400,
-          height:400}
+          height:300
+        }
       }
+      this.htablechart.draw();
     }
 
     clickEvent(){
