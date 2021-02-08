@@ -47,23 +47,31 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Label</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let player of sorted">
-                    <td>{{player.Name}}</td>
-                    <td>{{player.Role}}</td>
-                    <td>{{player.Label}}</td>
-                    <td><i class="fas fa-rupee-sign"></i>&nbsp;{{player.Amount}}</td>
-                </tr>
-            </tbody>
+        <div class="text-primary">
+            <h2>
+                Players Sorted by Price
+            </h2>
+        </div>
+        <table mat-table [dataSource]="datasource | slice: lowValue : highValue" class="mat-elevation-z8">
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef class="w-30"> Name </th>
+                <td mat-cell *matCellDef="let element" class="w-30"> {{element.Name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Role">
+                <th mat-header-cell *matHeaderCellDef class="w-30"> Role </th>
+                <td mat-cell *matCellDef="let element" class="w-30"> {{element.Role}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Label">
+                <th mat-header-cell *matHeaderCellDef class="w-30"> Label </th>
+                <td mat-cell *matCellDef="let element" class="w-30"> {{element.Label}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Price">
+                <th mat-header-cell *matHeaderCellDef class="w-30"> Price </th>
+                <td mat-cell *matCellDef="let element" class="w-30"> {{element.Amount}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="playerscolumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: playerscolumns;"></tr>
         </table>
+        <mat-paginator [pageSizeOptions]="[10, 20, 30, 40]" [length]="datasource.length" (page)="getPaginatorData($event)" showFirstLastButtons="false" [pageSize]="rowsOnPage"></mat-paginator>
     </div>
 </div>

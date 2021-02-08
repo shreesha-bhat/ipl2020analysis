@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  baseUrl ="http://ipl2020analysis.herokuapp.com/";
+  baseUrl ="https://ipl2020analysis.herokuapp.com/";
   constructor(private http:HttpClient,private router: Router) { }
 
   getAuthenticated(username, password): Observable<JwtRequest> {
@@ -34,6 +34,7 @@ export class AuthServiceService {
     const token = localStorage.getItem('token');
     return token;
   }
+
   logOut() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/');

@@ -3,8 +3,7 @@ import {IplserviceService} from '../iplservice.service'
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { ChartSelectEvent } from 'ng2-google-charts';
 import {AuthServiceService} from '../auth/auth-service.service'
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 
 
@@ -16,10 +15,13 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class PlayerComponent implements OnInit {
+  lowValue = 0
+  highValue = 10
+  rowsOnPage = 10
   teamNames;
   teamName;
   players;
-  datasource =  new MatTableDataSource();
+  datasource = []
   pieChart:GoogleChartInterface;
   tableChart:GoogleChartInterface;
   playerscolumns :string[] =['Name','Role','Label','Price']
@@ -41,8 +43,7 @@ export class PlayerComponent implements OnInit {
     if(this.teamName && this.teamName.length > 0){
       this.iplService.getPlayersByTeamName(this.teamName).subscribe(res=>{
         this.players = res["Team players Detail"];
-        this.datasource = new MatTableDataSource(this.players); 
-        this.datasource.paginator = this.paginator;
+        this.datasource = this.players
       })
       this.iplService.getTeamRoleStat(this.teamName).subscribe(res=>{
         let role_count = res["Team players Detail"];
@@ -94,5 +95,11 @@ export class PlayerComponent implements OnInit {
 
     clickEvent(){
       this.authservice.logOut()
+    }
+
+    public getPaginatorData(event: PageEvent): PageEvent {
+      this.lowValue = event.pageIndex * event.pageSize;
+      this.highValue = this.lowValue + event.pageSize;
+      return event;
     }
 }
